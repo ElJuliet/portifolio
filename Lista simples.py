@@ -13,6 +13,7 @@ class Back():
  negativo=None
  def conect(self):
   try:
+   #Informações como Ip, user, passoword, database e porta foram retirados propositalmente
    self.conn = mysql.connector.connect(
     host="Ip",
     user="",
