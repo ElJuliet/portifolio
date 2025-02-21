@@ -18,5 +18,5 @@ def hor_s(horario:str):
 
  return hor_tt
 
-print(hor_s("00:00:03"))
+print(hor_s("11:40:03"))
  
