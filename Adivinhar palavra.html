@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo de Palavras por Contexto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef;
+      text-align: center;
+      padding-top: 50px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    #palavraSecretaBox {
+      font-size: 20px;
+      color: darkgreen;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1> Jogo de Palavras por Contexto</h1>
+  <div id="palavraSecretaBox">Palavra secreta: <span id="palavraSecreta"></span></div>
+
+  <p>Digite duas palavras. O sistema dirá qual está mais próxima da palavra secreta.</p>
+
+  <input type="text" id="palavra1" placeholder="Palavra 1">
+  <input type="text" id="palavra2" placeholder="Palavra 2">
+  <br>
+  <button onclick="verificar()">Verificar</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    const palavrasSecretas = [
+      "oceano", "amor", "tecnologia", "montanha", "fogo",
+      "computador", "lua", "floresta", "amizade", "chuva"
+    ];
+
+    const palavraSecreta = palavrasSecretas[Math.floor(Math.random() * palavrasSecretas.length)];
+
+    // Mostra a palavra secreta na tela ao carregar a página
+    window.onload = function () {
+      document.getElementById("palavraSecreta").textContent = palavraSecreta;
+    };
+
+    function fakeSimilaridade(palavra, alvo) {
+      // Simulação de contexto: letras iguais nas mesmas posições
+      let score = 0;
+      for (let i = 0; i < Math.min(palavra.length, alvo.length); i++) {
+        if (palavra[i] === alvo[i]) score++;
+      }
+      return score;
+    }
+
+    function verificar() {
+      const p1 = document.getElementById("palavra1").value.toLowerCase().trim();
+      const p2 = document.getElementById("palavra2").value.toLowerCase().trim();
+      const resultado = document.getElementById("resultado");
+
+      if (!p1 || !p2) {
+        resultado.innerText = "❗ Digite duas palavras!";
+        return;
+      }
+
+      if (p1 === palavraSecreta || p2 === palavraSecreta) {
+        resultado.innerHTML = ` Você acertou A palavra secreta era <b>${palavraSecreta}</b>`;
+        return;
+      }
+
+      const score1 = fakeSimilaridade(p1, palavraSecreta);
+      const score2 = fakeSimilaridade(p2, palavraSecreta);
+
+      let mensagem = `
+         Similaridade:<br>
+        ➤ "${p1}" = ${score1}<br>
+        ➤ "${p2}" = ${score2}<br><br>
+      `;
+//DISTANCIA
+      if (score1 > score2) {
+        mensagem += `✅ <b>"${p1}"</b> está mais próxima da palavra secreta.`;
+      } else if (score2 > score1) {
+        mensagem += `✅ <b>"${p2}"</b> está mais próxima da palavra secreta.`;
+      } else {
+        mensagem += ` As duas palavras estão igualmente distantes.`;
+      }
+
+      resultado.innerHTML = mensagem;
+    }
+  </script>
+
+</body>
+</html>
