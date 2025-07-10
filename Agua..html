@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Imagens de Água Caindo</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #001d2e;
+    }
+//Botao
+    #botao {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .imagem {
+      position: absolute;
+      width: 120px;
+      height: auto;
+      animation: cair 6s linear forwards;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #00cfff;
+    }
+
+    @keyframes cair {
+      0% {
+        top: -150px;
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        top: 100vh;
+        opacity: 0.2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="botao">Fazer imagem cair</button>
+
+  <script> //Imagens
+    const imagens = [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "https://images.unsplash.com/photo-1470770841072-f978cf4d019e",
+      "https://images.unsplash.com/photo-1519817650390-64a93db511aa",
+      "https://images.unsplash.com/photo-1534081333815-ae5019106621",
+      "https://images.unsplash.com/photo-1441239372925-ac0b51c4c2a9",
+      "https://images.unsplash.com/photo-1506617420156-8e4536971650"
+    ];
+
+    function criarImagemCaindo() {
+      const img = document.createElement("img");
+
+      // Seleciona uma imagem real da lista
+      const url = imagens[Math.floor(Math.random() * imagens.length)];
+      img.src = url + "?w=300&h=300&fit=crop"; // força 
+
+      img.className = "imagem";
+      img.style.left = Math.random() * (window.innerWidth - 120) + "px";
+      document.body.appendChild(img);
+
+      img.addEventListener("animationend", () => {
+        img.remove();
+      });
+    }
+
+    document.getElementById("botao").addEventListener("click", criarImagemCaindo);
+  </script>
+</body>
+</html>
